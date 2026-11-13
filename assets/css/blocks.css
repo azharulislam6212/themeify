@@ -1,0 +1,120 @@
+/* Themeify: Cards block and Details accordions (site + editor canvas) */
+.tf-xcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin: 1.5em 0;
+}
+.tf-xcard {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--tf-rule, #d9ddd7);
+    border-radius: 10px;
+    color: var(--tf-ink, #1c211f);
+    line-height: 1.45;
+    text-decoration: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+a.tf-xcard:hover, a.tf-xcard:focus-visible {
+    border-color: var(--tf-accent, #0f766e);
+    box-shadow: 0 4px 14px rgba(28, 33, 31, .07);
+    color: var(--tf-ink, #1c211f);
+}
+.tf-xcard__title { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.tf-xcard__text { color: var(--tf-muted, #5d6763); font-size: .93rem; }
+.tf-xcards:not(.block-editor-block-list__layout) .tf-xcard__text:empty { display: none; }
+.tf-xcard__link { font-size: .8rem; color: var(--tf-accent, #0f766e); }
+
+.wp-block-details {
+    margin: 12px 0;
+    padding: 0 18px;
+    background: #fff;
+    border: 1px solid var(--tf-rule, #d9ddd7);
+    border-radius: 10px;
+}
+.wp-block-details[open] { padding-bottom: 16px; }
+.wp-block-details > summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+    font-weight: 600;
+    list-style: none;
+    cursor: pointer;
+}
+.wp-block-details > summary::-webkit-details-marker { display: none; }
+.wp-block-details > summary::after {
+    content: "+";
+    margin-left: auto;
+    font-weight: 400;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--tf-accent, #0f766e);
+}
+.wp-block-details[open] > summary::after { content: "\2212"; }
+.wp-block-details > summary + * { margin-top: 0; }
+.wp-block-details > :last-child { margin-bottom: 0; }
+
+/* Doc callouts: the Quote block (site docs + editor canvas). Default = blue note;
+   Styles "Tip", "Warning", "Danger" (registered in inc/docs-content.php). */
+.tf-doc-body .wp-block-quote,
+.tf-doc-body blockquote,
+.editor-styles-wrapper .wp-block-quote {
+    --tf-co: #2f6fed;
+    --tf-co-bg: #eef4ff;
+    --tf-co-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm.75 10.5h-1.5V7h1.5v4.5ZM8 5.75a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Z'/%3E%3C/svg%3E");
+    position: relative;
+    margin: 20px 0;
+    padding: 12px 16px 12px 40px;
+    border: 0;
+    border-left: 3px solid var(--tf-co);
+    border-radius: 0 10px 10px 0;
+    background: var(--tf-co-bg);
+    color: #121212;
+    font-family: "Inter", var(--tf-sans, sans-serif);
+    font-size: 14px;
+    font-style: normal;
+    line-height: 1.6;
+}
+.tf-doc-body .wp-block-quote::before,
+.tf-doc-body blockquote::before,
+.editor-styles-wrapper .wp-block-quote::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 15px;
+    height: 15px;
+    background: var(--tf-co);
+    -webkit-mask: var(--tf-co-icon) center / contain no-repeat;
+    mask: var(--tf-co-icon) center / contain no-repeat;
+}
+.tf-doc-body .wp-block-quote.is-style-tip,
+.editor-styles-wrapper .wp-block-quote.is-style-tip {
+    --tf-co: #1f9254;
+    --tf-co-bg: #ecf8f0;
+    --tf-co-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm-1 10.1L3.9 8l1.06-1.06L7 8.98l4.04-4.04L12.1 6 7 11.1Z'/%3E%3C/svg%3E");
+}
+.tf-doc-body .wp-block-quote.is-style-warning,
+.editor-styles-wrapper .wp-block-quote.is-style-warning {
+    --tf-co: #c27c0e;
+    --tf-co-bg: #fff6e5;
+    --tf-co-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.87 1.5a1 1 0 0 0-1.74 0L.63 13a1 1 0 0 0 .87 1.5h13a1 1 0 0 0 .87-1.5L8.87 1.5ZM8.75 12h-1.5v-1.5h1.5V12Zm0-3h-1.5V5.5h1.5V9Z'/%3E%3C/svg%3E");
+}
+.tf-doc-body .wp-block-quote.is-style-danger,
+.editor-styles-wrapper .wp-block-quote.is-style-danger {
+    --tf-co: #c0392b;
+    --tf-co-bg: #fdeeec;
+    --tf-co-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm2.97 8.91-1.06 1.06L8 9.06l-1.91 1.91-1.06-1.06L6.94 8 5.03 6.09l1.06-1.06L8 6.94l1.91-1.91 1.06 1.06L9.06 8l1.91 1.91Z'/%3E%3C/svg%3E");
+}
+.tf-doc-body .wp-block-quote > *,
+.tf-doc-body blockquote > *,
+.editor-styles-wrapper .wp-block-quote > * { margin: 0; }
+.tf-doc-body .wp-block-quote > * + *,
+.tf-doc-body blockquote > * + *,
+.editor-styles-wrapper .wp-block-quote > * + * { margin-top: 8px; }
+.tf-doc-body .wp-block-quote cite,
+.editor-styles-wrapper .wp-block-quote cite { display: block; margin-top: 6px; font-size: 12.5px; font-style: normal; color: rgba(18, 18, 18, .6); }
